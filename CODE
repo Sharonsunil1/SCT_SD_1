@@ -1,0 +1,75 @@
+import tkinter as tk
+from tkinter import ttk
+
+def celsius_to_fahrenheit(celsius):
+    return (celsius * 9/5) + 32
+
+def fahrenheit_to_celsius(fahrenheit):
+    return (fahrenheit - 32) * 5/9
+
+def celsius_to_kelvin(celsius):
+    return celsius + 273.15
+
+def kelvin_to_celsius(kelvin):
+    return kelvin - 273.15
+
+def fahrenheit_to_kelvin(fahrenheit):
+    celsius = fahrenheit_to_celsius(fahrenheit)
+    return celsius_to_kelvin(celsius)
+
+def kelvin_to_fahrenheit(kelvin):
+    celsius = kelvin_to_celsius(kelvin)
+    return celsius_to_fahrenheit(celsius)
+
+def convert_temperature():
+    from_scale = from_combo.get()
+    to_scale = to_combo.get()
+    value = float(entry.get())
+    
+    if from_scale == 'Celsius' and to_scale == 'Fahrenheit':
+        result = celsius_to_fahrenheit(value)
+    elif from_scale == 'Fahrenheit' and to_scale == 'Celsius':
+        result = fahrenheit_to_celsius(value)
+    elif from_scale == 'Celsius' and to_scale == 'Kelvin':
+        result = celsius_to_kelvin(value)
+    elif from_scale == 'Kelvin' and to_scale == 'Celsius':
+        result = kelvin_to_celsius(value)
+    elif from_scale == 'Fahrenheit' and to_scale == 'Kelvin':
+        result = fahrenheit_to_kelvin(value)
+    elif from_scale == 'Kelvin' and to_scale == 'Fahrenheit':
+        result = kelvin_to_fahrenheit(value)
+    else:
+        result = 'Invalid conversion'
+
+    result_label.config(text=f"Result: {result}")
+
+# Create the main window
+root = tk.Tk()
+root.title("Temperature Converter")
+
+# Create and place widgets
+from_label = ttk.Label(root, text="From:")
+from_label.grid(column=0, row=0, padx=10, pady=10)
+from_combo = ttk.Combobox(root, values=["Celsius", "Fahrenheit", "Kelvin"])
+from_combo.grid(column=1, row=0, padx=10, pady=10)
+from_combo.current(0)
+
+to_label = ttk.Label(root, text="To:")
+to_label.grid(column=0, row=1, padx=10, pady=10)
+to_combo = ttk.Combobox(root, values=["Celsius", "Fahrenheit", "Kelvin"])
+to_combo.grid(column=1, row=1, padx=10, pady=10)
+to_combo.current(1)
+
+entry_label = ttk.Label(root, text="Value:")
+entry_label.grid(column=0, row=2, padx=10, pady=10)
+entry = ttk.Entry(root)
+entry.grid(column=1, row=2, padx=10, pady=10)
+
+convert_button = ttk.Button(root, text="Convert", command=convert_temperature)
+convert_button.grid(column=0, row=3, columnspan=2, padx=10, pady=10)
+
+result_label = ttk.Label(root, text="Result: ")
+result_label.grid(column=0, row=4, columnspan=2, padx=10, pady=10)
+
+# Start the main event loop
+root.mainloop()
